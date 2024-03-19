@@ -5,17 +5,7 @@ pub struct ListNode {
   pub next: Option<Box<ListNode>>
 }
 
-impl ListNode {
-  #[inline]
-  fn new(val: i32) -> Self {
-    ListNode {
-      next: None,
-      val
-    }
-  }
-}
-
-fn add_two_numbers_inner(l1: Option<&Box<ListNode>>, l2: Option<&Box<ListNode>>, carry: i32) -> (Option<Box<ListNode>>) {
+fn add_two_numbers_inner(l1: Option<&Box<ListNode>>, l2: Option<&Box<ListNode>>, carry: i32) -> Option<Box<ListNode>> {
     
     // Match l1, l2, carry, add 0 if one is empty
     // make the sum % 10 and the reminder is the new carry
@@ -35,13 +25,12 @@ fn add_two_numbers_inner(l1: Option<&Box<ListNode>>, l2: Option<&Box<ListNode>>,
             Some(Box::new(ListNode { val: new_val, next: add_two_numbers_inner(l.next.as_ref(), None, new_carry)}))
         }
         (None, None, carry) => {
-            if(carry > 0) {
+            if carry > 0 {
                 Some(Box::new(ListNode { val: carry, next: None }))
             } else {
                 None
             }
         }
-        _ => None
     }
 }
     
